@@ -1,14 +1,12 @@
-class GrailsZipletGrailsPlugin {
+class ZipletGrailsPlugin {
     // the plugin version
-    def version = "0.1-SNAPSHOT"
+    def version = "0.1"
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "2.4 > *"
+    def grailsVersion = "2.0 > *"
     // resources that are excluded from plugin packaging
-    def pluginExcludes = [
-        "grails-app/views/error.gsp"
-    ]
+    def pluginExcludes = [ ]
 
-    def title = "Grails Ziplet Plugin" // Headline display name of the plugin
+    def title = "Ziplet Plugin" // Headline display name of the plugin
     def author = "Patrick Double"
     def authorEmail = "pat@patdouble.com"
     def description = '''\
@@ -17,7 +15,7 @@ compressing static resources.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://github.com/double16/grails-ziplet"
+    def documentation = "http://github.com/double16/grails-ziplet/blob/master/README.md"
 
     // Extra (optional) plugin metadata
 
@@ -31,17 +29,28 @@ compressing static resources.
 //    def developers = [ [ name: "Joe Bloggs", email: "joe@bloggs.net" ]]
 
     // Location of the plugin's issue tracker.
-//    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
+//    def issueManagement = [ system: "GitHub", url: "https://github.com/double16/grails-ziplet/issues" ]
 
     // Online location of the plugin's browseable source code.
     def scm = [ url: "https://github.com/double16/grails-ziplet" ]
 
     def doWithWebDescriptor = { xml ->
-        // TODO Implement additions to web.xml (optional), this event occurs before
-    }
+        def mappingElement = xml.'filter-mapping'
 
-    def onConfigChange = { event ->
-        // TODO Implement code that is executed when the project configuration changes.
-        // The event is the same as for 'onChange'.
+        def lastMapping = mappingElement[mappingElement.size() - 1]
+        lastMapping + {
+            'filter' {
+                'filter-name'("CompressingFilter")
+                'filter-class'("com.github.ziplet.filter.compression.CompressingFilter")
+                'init-param' {
+                  'param-name'("excludePathPatterns")
+                  'param-value'(".*/assets/.*,.*/static/.*")
+                }
+            }
+            'filter-mapping' {
+                'filter-name'("CompressingFilter")
+                'url-pattern'("/*")
+            }
+        }      
     }
 }
