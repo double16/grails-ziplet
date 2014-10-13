@@ -94,8 +94,6 @@ grails.ziplet.enabled = false
 		!param('debug')
 		and:'compressionThreshold is left at default'
 		!param('compressionThreshold')
-		and:'statsEnabled is left at default'
-		!param('statsEnabled')
 		and:'includePathPatterns is left at default'
 		!param('includePathPatterns')
 		and:'excludePathPatterns exclude assets and static resources'
@@ -123,17 +121,6 @@ grails.ziplet.debug = true
 		param('debug') == 'true'
 	}
 
-	void "statsEnabled enabled"() {
-		when:'config has stats enabled'
-		applyConfig('''
-grails.ziplet.statsEnabled = true
-''')
-		helper.updateWebXml(application, xml)
-		then:'web.xml has init-param statsEnabled = true'
-		reparse()
-		param('statsEnabled') == 'true'
-	}
-	
 	void "compressionThreshold set"() {
 		when:'config has compressionThreshold set'
 		applyConfig('''

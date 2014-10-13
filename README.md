@@ -16,7 +16,6 @@ The supported options follow:
 // just in case for some reason you want to disable the filter
 grails.ziplet.enabled = true
 grails.ziplet.debug = false
-grails.ziplet.statsEnabled = false
 grails.ziplet.compressionThreshold = 1024
 // filter's url-patterns, replaces the defaults
 grails.ziplet.urlPatterns = ["/*"]

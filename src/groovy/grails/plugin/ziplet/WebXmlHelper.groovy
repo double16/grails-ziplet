@@ -55,12 +55,6 @@ class WebXmlHelper {
 					  'param-value'(config.compressionThreshold)
 					}					
 				}
-				if (config.statsEnabled) {
-					'init-param' {
-					  'param-name'('statsEnabled')
-					  'param-value'('true')
-					}					
-				}
 				if (includePathPatterns) {
 					'init-param' {
 					  'param-name'('includePathPatterns')
