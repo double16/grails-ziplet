@@ -38,8 +38,8 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         // runtime 'mysql:mysql-connector-java:5.1.27'
         compile('com.github.ziplet:ziplet:2.0.0') {
-		excludes 'slf4j-nop'
-	}
+			excludes 'slf4j-nop'
+		}
     }
 
     plugins {
@@ -47,5 +47,10 @@ grails.project.dependency.resolution = {
               ":rest-client-builder:1.0.3") {
             export = false
         }
+		provided (':codenarc:0.21') {
+			export = false
+		}
     }
 }
+
+codenarc.extraIncludeDirs=['']
