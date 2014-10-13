@@ -5,6 +5,11 @@ Grails plugin for ziplet JEE stream compression. The [ziplet](https://github.com
 compresses output to improve client performance and reduce network bandwidth. This is very similar to the
 [Compress Plugin](http://grails.org/plugin/compress) that is deprecated.
 
+To use this plugin add the following to your BuildConfig.groovy in the "plugins" closure:
+```
+compile ":ziplet:0.2"
+```
+
 This plugin is normally used without configuration, the defaults are intended to be
 sufficient for most production applications. The configuration influences the ziplet
 filter, see the [ziplet](https://github.com/ziplet/ziplet) documentation for information
