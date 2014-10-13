@@ -36,6 +36,6 @@ The default configuration follows. Missing values use the default from the ziple
 parameter is not included in web.xml.
 ```
 grails.ziplet.urlPatterns = ["/*"]
-grails.ziplet.excludePathPatterns = ["/assets/.*"]
+grails.ziplet.excludePathPatterns = [".*/assets/.*"]
 grails.ziplet.excludeContentTypes = ["image/png", "image/gif", "image/png", "image/tiff"] 
 ```

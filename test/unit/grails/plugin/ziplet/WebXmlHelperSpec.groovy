@@ -97,7 +97,7 @@ grails.ziplet.enabled = false
 		and:'includePathPatterns is left at default'
 		!param('includePathPatterns')
 		and:'excludePathPatterns exclude assets and static resources'
-		param('excludePathPatterns') == '/assets/.*'
+		param('excludePathPatterns') == '.*/assets/.*'
 		and:'includeContentTypes is left at default'
 		!param('includeContentTypes')
 		and:'excludeContentTypes exclude assets and static resources'
@@ -175,7 +175,7 @@ grails.ziplet.excludePathPatterns = ['/path/3', '/path/4']
 		helper.updateWebXml(application, xml)
 		then:'web.xml has excludePathPatterns'
 		reparse()
-		param('excludePathPatterns') == '/assets/.*,/path/3,/path/4'
+		param('excludePathPatterns') == '.*/assets/.*,/path/3,/path/4'
 		and:'web.xml does not have includePathPatterns'
 		!param('includePathPatterns')
 	}

@@ -12,7 +12,7 @@ class WebXmlHelper {
 		def config = application.config.grails.ziplet
 		
 		def includePathPatterns = config.includePathPatterns
-		def excludePathPatterns = ['/assets/.*']
+		def excludePathPatterns = ['.*/assets/.*']
 		if (config.excludePathPatterns) {
 			if (includePathPatterns) {
 				throw new IllegalArgumentException('Cannot specify both excludePathPatterns and includePathPatterns')
