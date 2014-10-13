@@ -15,7 +15,7 @@ class ZipletGrailsPlugin {
     def author = "Patrick Double"
     def authorEmail = "pat@patdouble.com"
     def description = '''\
-Integrates the ziplet compression filter into grails for controller content. This plugin replaces the deprecated compress
+Integrates the ziplet compression filter into Grails for controller content. This plugin replaces the deprecated compress
 plugin that used the same filter under a different name. Use the asset-pipeline or resources plugin for
 compressing static resources.
 '''
