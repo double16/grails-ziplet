@@ -1,16 +1,17 @@
 package grails.plugin.ziplet
 
-import groovy.util.slurpersupport.GPathResult
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
+import com.github.ziplet.filter.compression.CompressingFilter
+
 class WebXmlHelper {
-	void updateWebXml(GrailsApplication application, def xml) {
+	void updateWebXml(GrailsApplication application, xml) {
 		if (!isEnabled(application)) {
 			return
 		}
-		
+
 		def config = application.config.grails.ziplet
-		
+
 		def includePathPatterns = config.includePathPatterns
 		def excludePathPatterns = ['.*/assets/.*']
 		if (config.excludePathPatterns) {
@@ -19,7 +20,7 @@ class WebXmlHelper {
 			}
 			excludePathPatterns.addAll(config.excludePathPatterns)
 		}
-		
+
 		def includeContentTypes = config.includeContentTypes
 		def excludeContentTypes = ['image/png','image/gif','image/jpeg','image/tiff']
 		if (config.excludeContentTypes) {
@@ -28,7 +29,7 @@ class WebXmlHelper {
 			}
 			excludeContentTypes.addAll(config.excludeContentTypes)
 		}
-		
+
 		def includeUserAgentPatterns = config.includeUserAgentPatterns
 		def excludeUserAgentPatterns = []
 		if (config.excludeUserAgentPatterns) {
@@ -37,62 +38,62 @@ class WebXmlHelper {
 			}
 			excludeUserAgentPatterns.addAll(config.excludeUserAgentPatterns)
 		}
-		
+
 		def contextParam = xml.'context-param'
 		contextParam[contextParam.size() - 1] + {
 			filter {
 				'filter-name'('CompressingFilter')
-				'filter-class'(com.github.ziplet.filter.compression.CompressingFilter.name)
+				'filter-class'(CompressingFilter.name)
 				if (config.debug) {
 					'init-param' {
 					  'param-name'('debug')
 					  'param-value'('true')
-					}					
+					}
 				}
 				if (config.compressionThreshold) {
 					'init-param' {
 					  'param-name'('compressionThreshold')
 					  'param-value'(config.compressionThreshold)
-					}					
+					}
 				}
 				if (includePathPatterns) {
 					'init-param' {
 					  'param-name'('includePathPatterns')
 					  'param-value'([includePathPatterns].flatten().findAll().join(','))
-					}					
+					}
 				} else if (excludePathPatterns) {
 					'init-param' {
 					  'param-name'('excludePathPatterns')
 					  'param-value'([excludePathPatterns].flatten().findAll().join(','))
-					}					
+					}
 				}
 				if (includeContentTypes) {
 					'init-param' {
 					  'param-name'('includeContentTypes')
 					  'param-value'([includeContentTypes].flatten().findAll().join(','))
-					}					
+					}
 				} else if (excludeContentTypes) {
 					'init-param' {
 					  'param-name'('excludeContentTypes')
 					  'param-value'([excludeContentTypes].flatten().findAll().join(','))
-					}					
+					}
 				}
 				if (includeUserAgentPatterns) {
 					'init-param' {
 					  'param-name'('includeUserAgentPatterns')
 					  'param-value'([includeUserAgentPatterns].flatten().findAll().join(','))
-					}					
+					}
 				} else if (excludeUserAgentPatterns) {
 					'init-param' {
 					  'param-name'('excludeUserAgentPatterns')
 					  'param-value'([excludeUserAgentPatterns].flatten().findAll().join(','))
-					}					
+					}
 				}
 				if (config.noVaryHeaderPatterns) {
 					'init-param' {
 					  'param-name'('noVaryHeaderPatterns')
 					  'param-value'([config.noVaryHeaderPatterns].flatten().findAll().join(','))
-					}					
+					}
 				}
 			}
 		}
@@ -101,14 +102,14 @@ class WebXmlHelper {
 		if (!urlPatterns) {
 			urlPatterns = ['/*']
 		}
-		def filter = xml.'filter' // this will put the compression filter near the first to be processed
+		def filter = xml.filter // this will put the compression filter near the first to be processed
 		urlPatterns.each { pattern ->
 			filter[filter.size() - 1] + {
-					'filter-mapping' {
-						'filter-name'('CompressingFilter')
-						'url-pattern'(pattern)
-					}
-			}				
+				'filter-mapping' {
+					'filter-name'('CompressingFilter')
+					'url-pattern'(pattern)
+				}
+			}
 		}
 	}
 
@@ -117,4 +118,3 @@ class WebXmlHelper {
 		enabled == null || enabled != false
 	}
 }
-

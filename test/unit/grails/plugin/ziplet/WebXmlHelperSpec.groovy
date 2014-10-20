@@ -2,16 +2,17 @@ package grails.plugin.ziplet
 
 import groovy.util.slurpersupport.GPathResult
 import groovy.xml.StreamingMarkupBuilder
+
 import org.codehaus.groovy.grails.commons.GrailsApplication
+
 import spock.lang.Specification
 
 class WebXmlHelperSpec extends Specification {
 	GrailsApplication application
-	WebXmlHelper helper
+	WebXmlHelper helper = new WebXmlHelper()
 	def xml
-	
+
 	def setup() {
-		helper = new WebXmlHelper()
 		xml = new XmlSlurper().parseText('''\
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
 	<context-param>
@@ -32,18 +33,19 @@ class WebXmlHelperSpec extends Specification {
 </web-app>
 ''')
 	}
-	
-	private def applyConfig(String config) {
+
+	private void applyConfig(String config) {
+		def parsed = new ConfigSlurper().parse(config)
 		application = [
-			getConfig: { new ConfigSlurper().parse(config) }
+			getConfig: { -> parsed }
 		] as GrailsApplication
 	}
 
 	private GPathResult reparse() {
-		String str = new StreamingMarkupBuilder().bindNode(xml).toString()
-		xml = new XmlSlurper().parseText(str.toString())
+		String str = new StreamingMarkupBuilder().bindNode(xml)
+		xml = new XmlSlurper().parseText(str)
 	}
-	
+
 	private String param(String name) {
 		String value
 		xml.filter.each { filter ->
@@ -55,7 +57,7 @@ class WebXmlHelperSpec extends Specification {
 		}
 		return value
 	}
-	
+
 	private List urlPatterns() {
 		List value = []
 		xml.'filter-mapping'.each { mapping ->
@@ -65,27 +67,27 @@ class WebXmlHelperSpec extends Specification {
 		}
 		return value
 	}
-	
+
 	void "disabled plugin"() {
 		when:'config disabled plugin'
 		applyConfig('''
 grails.ziplet.enabled = false
 ''')
-		then:'isEnabled returns false'		
-		helper.isEnabled(application) == false
-		
+		then:'isEnabled returns false'
+		!helper.isEnabled(application)
+
 		when:'web.xml is processed'
 		helper.updateWebXml(application, xml)
 		then:'xml is not changed'
 		reparse().filter.size() == 1
 	}
-	
+
 	void "defaults"() {
 		when:'config has no values'
 		applyConfig('')
 		then:'isEnabled returns true'
-		helper.isEnabled(application) == true
-		
+		helper.isEnabled(application)
+
 		when:'web.xml is processed'
 		helper.updateWebXml(application, xml)
 		then:'filter is added'
@@ -109,7 +111,7 @@ grails.ziplet.enabled = false
 		and:'url-pattern is set to default'
 		urlPatterns() == ['/*']
 	}
-	
+
 	void "debug enabled"() {
 		when:'config has debug enabled'
 		applyConfig('''
@@ -131,7 +133,7 @@ grails.ziplet.compressionThreshold = 4096
 		reparse()
 		param('compressionThreshold') == '4096'
 	}
-	
+
 	void "urlPatterns set to list"() {
 		when:'config has urlPatterns set to list'
 		applyConfig('''
@@ -227,7 +229,7 @@ grails.ziplet.excludeContentTypes = ['image/png', 'image/gif']
 		then:'plugin fails'
 		thrown(Exception)
 	}
-	
+
 	void "includeUserAgentPatterns set"() {
 		when:'config has includeUserAgentPatterns set'
 		applyConfig('''
