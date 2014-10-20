@@ -44,3 +44,6 @@ grails.ziplet.urlPatterns = ["/*"]
 grails.ziplet.excludePathPatterns = [".*/assets/.*"]
 grails.ziplet.excludeContentTypes = ["image/png", "image/gif", "image/png", "image/tiff"] 
 ```
+
+The assets path is excluded because it will call HttpServletResponse.getOutputStream() and HttpServletResponse.getWriter() in the same request, which is not allowed, see [ServletResponse|http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#getOutputStream()]. If you find other incompatible plugins please send a pull request or submit an issue with the additional excluded path.
+
