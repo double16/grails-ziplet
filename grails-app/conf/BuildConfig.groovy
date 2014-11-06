@@ -23,7 +23,7 @@ grails.project.dependency.resolution = {
 			export = false
 		}
 
-		provided (':codenarc:0.21') {
+		provided (':codenarc:0.22') {
 			export = false
 		}
 	}
