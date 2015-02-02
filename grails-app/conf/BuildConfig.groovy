@@ -26,7 +26,13 @@ grails.project.dependency.resolution = {
 		provided (':codenarc:0.22') {
 			export = false
 		}
+        provided (':code-coverage:2.0.3-3')
 	}
 }
 
 codenarc.extraIncludeDirs=['']
+
+coverage {
+    enabledByDefault = false
+    xml = true
+}

@@ -96,6 +96,10 @@ class WebXmlHelper {
 					}
 				}
 			}
+            filter {
+                'filter-name'('GrailsCompressingFilter')
+                'filter-class'(GrailsCompressingFilter.name)
+            }
 		}
 
 		def urlPatterns = [config.urlPatterns].flatten().findAll()
@@ -109,6 +113,10 @@ class WebXmlHelper {
 					'filter-name'('CompressingFilter')
 					'url-pattern'(pattern)
 				}
+                'filter-mapping' {
+                    'filter-name'('GrailsCompressingFilter')
+                    'url-pattern'(pattern)
+                }
 			}
 		}
 	}

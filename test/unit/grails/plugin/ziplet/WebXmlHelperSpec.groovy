@@ -91,7 +91,7 @@ grails.ziplet.enabled = false
 		when:'web.xml is processed'
 		helper.updateWebXml(application, xml)
 		then:'filter is added'
-		reparse().filter.size() == 2
+		reparse().filter.size() == 3
 		and:'debug is left at default'
 		!param('debug')
 		and:'compressionThreshold is left at default'

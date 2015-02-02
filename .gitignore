@@ -4,3 +4,6 @@
 /*.zip.sha1
 /plugin.xml
 /target
+/.idea
+/out
+cobertura.ser
