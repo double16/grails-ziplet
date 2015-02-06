@@ -47,3 +47,8 @@ grails.ziplet.excludeContentTypes = ["image/png", "image/gif", "image/png", "ima
 
 The assets path is excluded because it will call HttpServletResponse.getOutputStream() and HttpServletResponse.getWriter() in the same request, which is not allowed, see [ServletResponse](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#getOutputStream()). If you find other incompatible plugins please send a pull request or submit an issue with the additional excluded path.
 
+Changes
+-------
+
+* 0.4 - Grails expects ‘respond’ in controllers to mark the response as committed. The CompressingFilter only marks the response as committed after a threshold of output is received and output. This commit works around that behavior.
+
