@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponseWrapper
 
 class WorkaroundServletOutputStream extends ServletOutputStream {
-    final ServletOutputStream underlying
+    @Delegate final ServletOutputStream underlying
     boolean outputSeen = false
 
     WorkaroundServletOutputStream(ServletOutputStream underlying) {
