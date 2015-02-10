@@ -1,6 +1,8 @@
 grails-ziplet
 =============
 
+[ ![Codeship Status for double16/grails-ziplet](https://codeship.com/projects/8dacb170-9381-0132-9ad8-7a9801f292f9/status?branch=master)](https://codeship.com/projects/62263)
+
 Grails plugin for ziplet JEE stream compression. The [ziplet](https://github.com/ziplet/ziplet) filter
 compresses output to improve client performance and reduce network bandwidth. This is very similar to the
 [Compress Plugin](http://grails.org/plugin/compress) that is deprecated.
