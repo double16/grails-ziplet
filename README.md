@@ -54,6 +54,8 @@ If you find other incompatible plugins please send a pull request or submit an i
 Changes
 -------
 
-* 0.5 - Fix [#2](https://github.com/double16/grails-ziplet/issues/2) getOutputStream() failure on multiple calls by moving filter to top of chain. Thanks to [ryancornia](https://github.com/ryancornia).
+* 0.5 
+  - Fix [#2](https://github.com/double16/grails-ziplet/issues/2) getOutputStream() failure on multiple calls by moving filter to top of chain. Thanks to [ryancornia](https://github.com/ryancornia).
+  - Upgrade build to Grails 2.5.0, plugin is still compatible with Grails 2.0.0 and higher.
 * 0.4 - Grails expects ‘respond’ in controllers to mark the response as committed. The CompressingFilter only marks the response as committed after a threshold of output is received and output. This commit works around that behavior.
 
