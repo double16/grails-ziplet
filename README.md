@@ -9,7 +9,7 @@ compresses output to improve client performance and reduce network bandwidth. Th
 
 To use this plugin add the following to your BuildConfig.groovy in the "plugins" closure:
 ```
-compile ":ziplet:0.2"
+compile ":ziplet:0.5"
 ```
 
 This plugin is normally used without configuration, the defaults are intended to be
@@ -47,10 +47,13 @@ grails.ziplet.excludePathPatterns = [".*/assets/.*"]
 grails.ziplet.excludeContentTypes = ["image/png", "image/gif", "image/png", "image/tiff"] 
 ```
 
-The assets path is excluded because it will call HttpServletResponse.getOutputStream() and HttpServletResponse.getWriter() in the same request, which is not allowed, see [ServletResponse](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#getOutputStream()). If you find other incompatible plugins please send a pull request or submit an issue with the additional excluded path.
+The assets path is excluded because it will call HttpServletResponse.getOutputStream() and HttpServletResponse.getWriter()
+in the same request, which is not allowed, see [ServletResponse](http://docs.oracle.com/javaee/6/api/javax/servlet/ServletResponse.html#getOutputStream()).
+If you find other incompatible plugins please send a pull request or submit an issue with the additional excluded path.
 
 Changes
 -------
 
+* 0.5 - Fix [#2](https://github.com/double16/grails-ziplet/issues/2) getOutputStream() failure on multiple calls by moving filter to top of chain. Thanks to [ryancornia](https://github.com/ryancornia).
 * 0.4 - Grails expects ‘respond’ in controllers to mark the response as committed. The CompressingFilter only marks the response as committed after a threshold of output is received and output. This commit works around that behavior.
 

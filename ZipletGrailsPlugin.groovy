@@ -1,7 +1,7 @@
 import grails.plugin.ziplet.WebXmlHelper
 
 class ZipletGrailsPlugin {
-	def version = "0.4"
+	def version = "0.5"
 	def grailsVersion = "2.0 > *"
 	def loadAfter = ['controllers']
 
@@ -21,4 +21,9 @@ compressing static resources.
 	def doWithWebDescriptor = { xml ->
 		new WebXmlHelper().updateWebXml(application, xml)
 	}
+
+    def getWebXmlFilterOrder() {
+        def FilterManager = getClass().getClassLoader().loadClass('grails.plugin.webxml.FilterManager')
+        [CompressingFilter: FilterManager.URL_MAPPING_POSITION + 1000, GrailsCompressingFilter: FilterManager.URL_MAPPING_POSITION + 1001]
+    }
 }
