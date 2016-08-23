@@ -19,11 +19,11 @@ grails.project.dependency.resolution = {
 	}
 
 	plugins {
-		build ':release:3.1.1', ':rest-client-builder:2.1.1', {
+		build ':release:3.1.2', ':rest-client-builder:2.1.1', {
 			export = false
 		}
 
-		provided (':codenarc:0.23') {
+		provided (':codenarc:0.25.2') {
 			export = false
 		}
         provided (':code-coverage:2.0.3-3')
