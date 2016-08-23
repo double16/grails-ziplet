@@ -1,6 +1,8 @@
 grails-ziplet
 =============
 
+[![CircleCI](https://circleci.com/gh/double16/grails-ziplet.svg?style=svg&circle-token=15d42b85b73afb43435e087fc18ada77a1353043)](https://circleci.com/gh/double16/grails-ziplet)
+
 Grails plugin for ziplet JEE stream compression. The [ziplet](https://github.com/ziplet/ziplet) filter
 compresses output to improve client performance and reduce network bandwidth. This is very similar to the
 [Compress Plugin](http://grails.org/plugin/compress) that is deprecated.
